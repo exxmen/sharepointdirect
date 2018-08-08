@@ -211,7 +211,13 @@ namespace SpOnlineDirectConsole
                 fileInfo.ContentStream = fs;
                 fileInfo.Url = Filename;
                 fileInfo.Overwrite = true;
-                var file = folder.Files.Add(fileInfo);
+                Microsoft.SharePoint.Client.File file = folder.Files.Add(fileInfo);
+                
+                foreach (var pair in pairs)
+                {
+                    file.ListItemAllFields["" + pair.Key + ""] = "" + pair.Value +"";
+                }
+
                 folder.Context.Load(file);
                 folder.Context.ExecuteQueryRetry();
 
