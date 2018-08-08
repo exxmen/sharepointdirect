@@ -26,7 +26,7 @@ namespace SpOnlineDirectConsole
                     case "AddItem":
                         AddItem(args[1], args[2], args[3], args[4]);
                         break;
-                    case "DeleteItem":
+                    case "DeleteItemById":
                         int itemId = 0;
                         Int32.TryParse(args[3], out itemId);
                         DeleteItemById(args[1], args[2], itemId);
@@ -39,6 +39,22 @@ namespace SpOnlineDirectConsole
                         }
                         UploadFileWithMeta(args[1], args[2], args[3], map);
                         break;
+                    case "-v":
+                        Console.WriteLine("V 0.1");
+                        break;
+                    case "-h":
+                        Console.WriteLine("Welcome to the SharePointDirect CLI. ");
+                        Console.WriteLine("Brought to you by Exx Navarro. ");
+                        Console.WriteLine("use -v to check tool version");
+                        Console.WriteLine("to use the CLI, use one of the choices below as the first argument, the second argument should be the url, the third is the list or library name. The arguments that are needed for the specific comes after these 3 required arguments.");
+                        Console.WriteLine("use \"GetNumberOfItems\" to get the number of items in a list");
+                        Console.WriteLine("use \"GetItemId\" to get the ID for a certain item by using the title as the criteria. ");
+                        Console.WriteLine("use \"AddItem\" to add a new item to the list. ");
+                        Console.WriteLine("use \"DeleteItemById\" to delete and item from the list using the item ID. ");
+                        Console.WriteLine("Press any key to exit. ");
+                        var input = Console.ReadLine();
+                        break;
+
                 }
             }
         }
@@ -61,6 +77,8 @@ namespace SpOnlineDirectConsole
             context.ExecuteQuery();
 
             itemCount = list.ItemCount;
+
+            Console.WriteLine(itemCount);
 
             using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\spresult.txt"))
             {
@@ -95,6 +113,8 @@ namespace SpOnlineDirectConsole
 
             itemId = listItems[0].Id.ToString();
 
+            Console.WriteLine(itemId);
+
             using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\spresult.txt"))
             {
                 sw.WriteLine(itemId);
@@ -127,6 +147,8 @@ namespace SpOnlineDirectConsole
 
             itemId = newItem.Id.ToString();
 
+            Console.WriteLine(itemId);
+
             using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\spresult.txt"))
             {
                 sw.WriteLine(itemId);
@@ -150,6 +172,8 @@ namespace SpOnlineDirectConsole
             ListItem itemToBeDeleted = list.GetItemById(Id);
             itemToBeDeleted.DeleteObject();
             context.ExecuteQuery();
+
+            Console.WriteLine("Item deleted.");
 
             using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\spresult.txt"))
             {
@@ -190,6 +214,8 @@ namespace SpOnlineDirectConsole
                 var file = folder.Files.Add(fileInfo);
                 folder.Context.Load(file);
                 folder.Context.ExecuteQueryRetry();
+
+                Console.WriteLine("File uploaded.");
 
                 using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\spresult.txt"))
                 {
