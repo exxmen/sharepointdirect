@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharePointDirect", "SharePointDirect\SharePointDirect.csproj", "{197FA270-62B9-4EC4-AF65-1EC09E057CF7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{197FA270-62B9-4EC4-AF65-1EC09E057CF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{197FA270-62B9-4EC4-AF65-1EC09E057CF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{197FA270-62B9-4EC4-AF65-1EC09E057CF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{197FA270-62B9-4EC4-AF65-1EC09E057CF7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B8F4A9E4-5AD9-43C9-B179-95C69BD83874}
+	EndGlobalSection
+EndGlobal
