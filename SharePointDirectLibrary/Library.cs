@@ -6,67 +6,11 @@ using System.Threading.Tasks;
 using OfficeDevPnP.Core;
 using Microsoft.SharePoint.Client;
 using System.IO;
-using SharePointDirectLibrary;
 
-namespace SpOnlineDirectConsole
+namespace SharePointDirectLibrary
 {
-    class Program
+    public class Library
     {
-        static void Main(string[] args)
-        {
-            if (args.Length != 0)
-            {
-                switch (args[0])
-                {
-                    case "GetNumberOfItems":
-                        SharePointDirectLibrary.Library.GetNumberOfItems(args[1], args[2]);
-                        break;
-                    case "GetItemId":
-                        SharePointDirectLibrary.Library.GetItemId(args[1], args[2], args[3]);
-                        break;
-                    case "AddItem":
-                        SharePointDirectLibrary.Library.AddItem(args[1], args[2], args[3], args[4]);
-                        break;
-                    case "DeleteItemById":
-                        int itemId = 0;
-                        Int32.TryParse(args[3], out itemId);
-                        DeleteItemById(args[1], args[2], itemId);
-                        break;
-                    case "UploadFileWithMeta":
-                        var map = new Dictionary<string, string>();
-                        for (int i = 4; i <= args.Length - 1; i+=2)
-                        {
-                            map.Add(args[i], args[i + 1]);
-                        }
-                        SharePointDirectLibrary.Library.UploadFileWithMeta(args[1], args[2], args[3], map);
-                        break;
-                    case "-v":
-                        Console.WriteLine("V 0.1");
-                        break;
-                    case "-h":
-                        Console.WriteLine(" ");
-                        Console.WriteLine("Welcome to the SharePointDirect CLI. ");
-                        Console.WriteLine("This tool is brought to you by Exx Navarro. ");
-                        Console.WriteLine(" ");
-                        Console.WriteLine("use -v to check tool version");
-                        Console.WriteLine(" ");
-                        Console.WriteLine("to use the CLI, use one of the choices below as the first argument, the second argument should be the url, the third argument is the list or library name. The arguments that are needed for the specific function comes after these 3 required arguments.");
-                        Console.WriteLine(" ");
-                        Console.WriteLine("use \"GetNumberOfItems\" to get the number of items in a list");
-                        Console.WriteLine("use \"GetItemId\" to get the ID for a certain item by using the title as the criteria. ");
-                        Console.WriteLine("use \"AddItem\" to add a new item to the list. ");
-                        Console.WriteLine("use \"DeleteItemById\" to delete and item from the list using the item ID. ");
-                        Console.WriteLine("use \"UploadFileWithMeta\" to upload a file and include metadata. ");
-                        Console.WriteLine(" ");
-                        Console.WriteLine("More information on this link: ");
-                        Console.WriteLine(" ");
-                        Console.WriteLine("Press any key to exit. ");
-                        var input = Console.ReadLine();
-                        break;
-                }
-            }
-        }
-
         /// <summary>
         /// gets the item count of the provided list in the specified sharepoint site
         /// </summary>
@@ -200,13 +144,13 @@ namespace SpOnlineDirectConsole
         /// <remarks>
         /// the pairs accepts key value pairs of strings only
         /// </remarks>
-        public static void UploadFileWithMeta(string URL, string FolderName, string Filepath, Dictionary<string,string> pairs)
+        public static void UploadFileWithMeta(string URL, string FolderName, string Filepath, Dictionary<string, string> pairs)
         {
             string Filename;
             Filename = Path.GetFileName(Filepath);
 
             AuthenticationManager authManager = new AuthenticationManager();
- 
+
             var context = authManager.GetWebLoginClientContext(URL);
             Web web = context.Web;
             List library = web.Lists.GetByTitle(FolderName);
@@ -221,10 +165,10 @@ namespace SpOnlineDirectConsole
                 fileInfo.Url = library.RootFolder.ServerRelativeUrl + "/" + Filename;
                 fileInfo.Overwrite = true;
                 Microsoft.SharePoint.Client.File file = folder.Files.Add(fileInfo);
-                
+
                 foreach (var pair in pairs)
                 {
-                    file.ListItemAllFields["" + pair.Key + ""] = "" + pair.Value +"";
+                    file.ListItemAllFields["" + pair.Key + ""] = "" + pair.Value + "";
                 }
 
                 file.ListItemAllFields.Update();
