@@ -1,11 +1,3 @@
-# SharePoint Direct
-
-### SharePointDirect is a command line interface for executing Sharepoint actions.
-
-### The CLI was created with C# and uses the CSOM API for .NET.
-
-### git clone https://github.com/exxmen/sharepointdirect.git if you would like to contribute
-
 MIT LICENSE
 
 Copyright (c) <2018> exxoooz
