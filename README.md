@@ -1,29 +1,23 @@
 # SharePoint Direct
 
-### SharePointDirect is a command line interface for executing Sharepoint actions.
+### SharePointDirect is a command line interface for executing Sharepoint actions (see functionality below).
 
 ### The CLI was created with C# and uses the CSOM API for .NET.
 
 ### git clone https://github.com/exxmen/sharepointdirect.git if you would like to contribute
 
-MIT LICENSE
+### Functions
 
-Copyright (c) <2018> exxoooz
+* GetNumberOfItems - Gets the number of items in the provided list
+* GetItemId - Gets the ID of the item by title
+* AddItem - adds an item to the list
+* DeleteItemById - deletes an item from the list using a provided ID
+* UploadFileWithMeta - uploads a file to a specified library and adds the given properties
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+### Usage:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+*SharePointDirect* args[]
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+### Examples:
+
+#### GetNumberOfItems: *SharePointDirect Function URL Listname*
