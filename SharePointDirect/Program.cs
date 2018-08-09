@@ -24,7 +24,12 @@ namespace SpOnlineDirectConsole
                         GetItemId(args[1], args[2], args[3]);
                         break;
                     case "AddItem":
-                        AddItem(args[1], args[2], args[3], args[4]);
+                        var addItemMap = new Dictionary<string, string>();
+                        for(int i = 3; i <= args.Length - 1; i+=2)
+                        {
+                            addItemMap.Add(args[i], args[i + 1]);
+                        }
+                        AddItem(args[1], args[2], addItemMap);
                         break;
                     case "DeleteItemById":
                         int itemId = 0;
@@ -32,12 +37,12 @@ namespace SpOnlineDirectConsole
                         DeleteItemById(args[1], args[2], itemId);
                         break;
                     case "UploadFileWithMeta":
-                        var map = new Dictionary<string, string>();
+                        var propertiesMap = new Dictionary<string, string>();
                         for (int i = 4; i <= args.Length - 1; i+=2)
                         {
-                            map.Add(args[i], args[i + 1]);
+                            propertiesMap.Add(args[i], args[i + 1]);
                         }
-                        UploadFileWithMeta(args[1], args[2], args[3], map);
+                        UploadFileWithMeta(args[1], args[2], args[3], propertiesMap);
                         break;
                     case "-v":
                         Console.WriteLine("V 0.1");
@@ -57,7 +62,7 @@ namespace SpOnlineDirectConsole
                         Console.WriteLine("use \"DeleteItemById\" to delete and item from the list using the item ID. ");
                         Console.WriteLine("use \"UploadFileWithMeta\" to upload a file and include metadata. ");
                         Console.WriteLine(" ");
-                        Console.WriteLine("More information on this link: ");
+                        Console.WriteLine("More information on this link: https://github.com/exxmen/sharepointdirect/blob/master/README.md");
                         Console.WriteLine(" ");
                         Console.WriteLine("Press any key to exit. ");
                         var input = Console.ReadLine();
@@ -87,7 +92,7 @@ namespace SpOnlineDirectConsole
 
             Console.WriteLine(itemCount);
 
-            using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\spresult.txt"))
+            using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetNumberOfItemsResult.txt"))
             {
                 sw.WriteLine(itemCount);
             }
@@ -122,7 +127,7 @@ namespace SpOnlineDirectConsole
 
             Console.WriteLine(itemId);
 
-            using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\spresult.txt"))
+            using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetItemIdResult.txt"))
             {
                 sw.WriteLine(itemId);
             }
@@ -136,7 +141,7 @@ namespace SpOnlineDirectConsole
         /// <param name="Field"></param>
         /// <param name="Value"></param>
         /// <returns></returns>
-        public static void AddItem(string URL, string ListName, string Field, string Value)
+        public static void AddItem(string URL, string ListName, Dictionary<string, string> valuePairs)
         {
             string itemId;
 
@@ -147,7 +152,12 @@ namespace SpOnlineDirectConsole
             List list = web.Lists.GetByTitle(ListName);
             ListItemCreationInformation newItemInfo = new ListItemCreationInformation();
             ListItem newItem = list.AddItem(newItemInfo);
-            newItem["" + Field + ""] = Value;
+
+            foreach(var pair in valuePairs)
+            {
+                newItem["" + pair.Key + ""] = pair.Value;
+            }
+            
             newItem.Update();
             context.Load(newItem);
             context.ExecuteQuery();
@@ -156,7 +166,7 @@ namespace SpOnlineDirectConsole
 
             Console.WriteLine(itemId);
 
-            using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\spresult.txt"))
+            using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\AddItemResult.txt"))
             {
                 sw.WriteLine(itemId);
             }
@@ -182,7 +192,7 @@ namespace SpOnlineDirectConsole
 
             Console.WriteLine("Item deleted.");
 
-            using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\spresult.txt"))
+            using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\DeleteItemByIdResult.txt"))
             {
                 sw.WriteLine("Item Deleted.");
             }
@@ -232,7 +242,7 @@ namespace SpOnlineDirectConsole
 
                 Console.WriteLine("File uploaded.");
 
-                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\spresult.txt"))
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\UploadFileWithMetaResult.txt"))
                 {
                     sw.WriteLine("File uploaded.");
                 }
