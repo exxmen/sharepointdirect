@@ -15,6 +15,7 @@
 * UploadFileWithMeta - uploads a file to a specified library and adds the given properties
 * UploadFileNoMeta - uploads a file to a specified library with no properties
 * GetOneItem - Gets an item from the list based on a given title and writes the result to a csv file
+* GetOldestItem - Gets the oldest item from the list
 
 * All methods writes the result to the console and a textfile/csv file.
 
@@ -44,3 +45,6 @@
 
 #### GetOneItem:
 *SharePointDirect GetOneItem URL Listname Title*
+
+#### GetOldestItem:
+*SharePointDirect GetOldestItem URL Listname*
