@@ -56,7 +56,12 @@ namespace SpOnlineDirectConsole
                         UploadFileWithMeta(args[1], args[2], args[3], propertiesMap);
                         break;
                     case "getoneitem":
-                        GetOneItem(args[1], args[2], args[3]);
+                        var fieldsToReturn = new List<string>();
+                        for(int i = 4; i < args.Length; i++)
+                        {
+                            fieldsToReturn.Add(args[i]);
+                        }
+                        GetOneItem(args[1], args[2], args[3], fieldsToReturn);
                         break;
                     case "getoldestitem":
                         GetOldestItem(args[1], args[2]);
@@ -324,7 +329,7 @@ namespace SpOnlineDirectConsole
         /// <param name="URL"></param>
         /// <param name="ListName"></param>
         /// <param name="SearchTitle"></param>
-        public static void GetOneItem(string URL, string ListName, string SearchTitle)
+        public static void GetOneItem(string URL, string ListName, string SearchTitle, List<string> fieldsToReturn)
         {
             int itemId;
 
@@ -349,14 +354,19 @@ namespace SpOnlineDirectConsole
             context.ExecuteQuery();
 
 
-            using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetOneItem.csv"))
+            using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetOneItem.txt"))
             {
-                foreach (string fieldName in item.FieldValues.Keys)
+                //foreach (string fieldName in item.FieldValues.Keys)
+                //{
+                //    if (fieldName.Equals("Title") || fieldName.Equals("REPROCESS") || fieldName.Equals("Timestamp"))
+                //    {
+                //        sw.Write(fieldName + "," + item.FieldValues[fieldName] + ",");
+                //    }
+                //}
+
+                foreach(string field in fieldsToReturn)
                 {
-                    if (fieldName.Equals("Title") || fieldName.Equals("REPROCESS") || fieldName.Equals("Timestamp"))
-                    {
-                        sw.Write(fieldName + "," + item.FieldValues[fieldName] + ",");
-                    }
+                    sw.Write(field + ";" + item.FieldValues[field] + ";");
                 }
             }
         }

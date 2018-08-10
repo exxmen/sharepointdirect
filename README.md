@@ -16,7 +16,7 @@
 * DeleteItemById - deletes an item from the list using a provided ID
 * UploadFileWithMeta - uploads a file to a specified library and adds the given properties
 * UploadFileNoMeta - uploads a file to a specified library with no properties
-* GetOneItem - Gets an item from the list based on a given title and writes the result to a csv file
+* GetOneItem - Gets an item from the list based on a given title and writes the requested field name and field value to a txt file
 * GetOldestItem - Gets the oldest item from the list
 
 ### Usage:
@@ -44,7 +44,7 @@
 *SharePointDirect UploadFileNoMeta URL Listname Filepath*
 
 #### GetOneItem:
-*SharePointDirect GetOneItem URL Listname Title*
+*SharePointDirect GetOneItem URL Listname Title Fields...*
 
 #### GetOldestItem:
 *SharePointDirect GetOldestItem URL Listname*
