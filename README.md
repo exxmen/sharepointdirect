@@ -13,7 +13,7 @@
 * AddItem - adds an item to the list
 * DeleteItemById - deletes an item from the list using a provided ID
 * UploadFileWithMeta - uploads a file to a specified library and adds the given properties
-* UploadFileWithMeta - uploads a file to a specified library with no properties
+* UploadFileNoMeta - uploads a file to a specified library with no properties
 * GetOneItem - Gets an item from the list based on a given title and writes the result to a csv file
 
 * All functions writes the result to the console and a textfile/csv file.

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using OfficeDevPnP.Core;
 using Microsoft.SharePoint.Client;
 using System.IO;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace SpOnlineDirectConsole
 {
@@ -13,6 +15,13 @@ namespace SpOnlineDirectConsole
     {
         static void Main(string[] args)
         {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+
+            string version;
+
+            version = fileVersionInfo.ProductVersion;
+
             if (args.Length != 0)
             {
                 switch (args[0])
@@ -48,7 +57,7 @@ namespace SpOnlineDirectConsole
                         GetOneItem(args[1], args[2], args[3]);
                         break;
                     case "-v":
-                        Console.WriteLine("V 0.1");
+                        Console.WriteLine(version);
                         break;
                     case "-h":
                         Console.WriteLine(" ");
@@ -64,6 +73,8 @@ namespace SpOnlineDirectConsole
                         Console.WriteLine("use \"AddItem\" to add a new item to the list. ");
                         Console.WriteLine("use \"DeleteItemById\" to delete and item from the list using the item ID. ");
                         Console.WriteLine("use \"UploadFileWithMeta\" to upload a file and include metadata. ");
+                        Console.WriteLine("use \"UploadFileNoMeta\" to upload a file with no defined metadata. ");
+                        Console.WriteLine("use \"GetOneItem\" to get an item from the list based on the title. ");
                         Console.WriteLine(" ");
                         Console.WriteLine("More information on this link: https://github.com/exxmen/sharepointdirect/blob/master/README.md");
                         Console.WriteLine(" ");
