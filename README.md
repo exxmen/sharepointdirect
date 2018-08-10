@@ -8,6 +8,8 @@
 
 ### Methods
 
+#### All methods writes the result to the console/textfile/csv file.
+
 * GetNumberOfItems - Gets the number of items in the provided list.
 * GetItemId - Gets the ID of the item by title
 * AddItem - adds an item to the list
@@ -16,8 +18,6 @@
 * UploadFileNoMeta - uploads a file to a specified library with no properties
 * GetOneItem - Gets an item from the list based on a given title and writes the result to a csv file
 * GetOldestItem - Gets the oldest item from the list
-
-* All methods writes the result to the console and a textfile/csv file.
 
 ### Usage:
 
