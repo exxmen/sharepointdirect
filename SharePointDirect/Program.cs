@@ -58,6 +58,9 @@ namespace SpOnlineDirectConsole
                     case "getoneitem":
                         GetOneItem(args[1], args[2], args[3]);
                         break;
+                    case "getoldestitem":
+                        GetOldestItem(args[1], args[2]);
+                        break;
                     case "-v":
                         Console.WriteLine(version);
                         break;
@@ -315,7 +318,6 @@ namespace SpOnlineDirectConsole
             }
         }
 
-
         /// <summary>
         /// gets one item from the list and writes the data to a csv file
         /// </summary>
@@ -356,6 +358,39 @@ namespace SpOnlineDirectConsole
                         sw.Write(fieldName + "," + item.FieldValues[fieldName] + ",");
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// gets the oldest item from the list provided
+        /// </summary>
+        /// <param name="URL"></param>
+        /// <param name="ListName"></param>
+        public static void GetOldestItem(string URL, string ListName)
+        {
+            int itemId;
+
+            AuthenticationManager authManager = new AuthenticationManager();
+
+            CamlQuery query = new CamlQuery();
+            var viewXML = "<View><Query><OrderBy><FieldRef Name='Created' Ascending='TRUE'/></OrderBy></Query><RowLimit>1</RowLimit></View>";
+            query.ViewXml = viewXML;
+            var context = authManager.GetWebLoginClientContext(URL);
+            Web web = context.Web;
+            List list = web.Lists.GetByTitle(ListName);
+            ListItemCollection listItems = list.GetItems(query);
+            context.Load(listItems);
+            context.ExecuteQuery();
+
+            itemId = listItems[0].Id;
+
+            ListItem item = list.GetItemById(itemId);
+            context.Load(item);
+            context.ExecuteQuery();
+
+            using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetOldestItem.txt"))
+            {
+                sw.Write(itemId + ";" + item.FieldValues["Title"]);
             }
         }
     }
