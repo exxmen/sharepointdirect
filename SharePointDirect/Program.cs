@@ -329,6 +329,7 @@ namespace SpOnlineDirectConsole
         /// <param name="URL"></param>
         /// <param name="ListName"></param>
         /// <param name="SearchTitle"></param>
+        /// <param name="fieldsToReturn"></param>
         public static void GetOneItem(string URL, string ListName, string SearchTitle, List<string> fieldsToReturn)
         {
             int itemId;
