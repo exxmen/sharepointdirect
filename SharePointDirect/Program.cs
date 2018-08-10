@@ -90,7 +90,8 @@ namespace SpOnlineDirectConsole
 
             itemCount = list.ItemCount;
 
-            Console.WriteLine(itemCount);
+            var message = itemCount.ToString();
+            Console.WriteLine(message);
 
             using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetNumberOfItemsResult.txt"))
             {
@@ -125,11 +126,12 @@ namespace SpOnlineDirectConsole
 
             itemId = listItems[0].Id.ToString();
 
-            Console.WriteLine(itemId);
+            var message = itemId.ToString();
+            Console.WriteLine(message);
 
             using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetItemIdResult.txt"))
             {
-                sw.WriteLine(itemId);
+                sw.WriteLine(message);
             }
         }
 
@@ -164,11 +166,12 @@ namespace SpOnlineDirectConsole
 
             itemId = newItem.Id.ToString();
 
-            Console.WriteLine(itemId);
+            var message = itemId.ToString();
+            Console.WriteLine(message);
 
             using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\AddItemResult.txt"))
             {
-                sw.WriteLine(itemId);
+                sw.WriteLine(message);
             }
         }
 
@@ -190,11 +193,12 @@ namespace SpOnlineDirectConsole
             itemToBeDeleted.DeleteObject();
             context.ExecuteQuery();
 
-            Console.WriteLine("Item deleted.");
+            var message = "Item deleted.";
+            Console.WriteLine(message);
 
             using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\DeleteItemByIdResult.txt"))
             {
-                sw.WriteLine("Item Deleted.");
+                sw.WriteLine(message);
             }
 
         }
@@ -240,11 +244,44 @@ namespace SpOnlineDirectConsole
                 context.Load(file);
                 context.ExecuteQuery();
 
-                Console.WriteLine("File uploaded.");
+                var message = "File uploaded with metadata";
+                Console.WriteLine(message);
 
                 using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\UploadFileWithMetaResult.txt"))
                 {
-                    sw.WriteLine("File uploaded.");
+                    sw.WriteLine(message);
+                }
+            }
+        }
+
+        public static void UploadFileNoMeta(string URL, string FolderName, string Filepath)
+        {
+            string Filename;
+            Filename = Path.GetFileName(Filepath);
+
+            AuthenticationManager authManager = new AuthenticationManager();
+
+            var context = authManager.GetWebLoginClientContext(URL);
+            Web web = context.Web;
+            List library = web.Lists.GetByTitle(FolderName);
+            Folder folder = library.RootFolder;
+            context.Load(folder);
+            context.ExecuteQuery();
+
+            using (FileStream fs = new FileStream(Filepath, FileMode.Open))
+            {
+                FileCreationInformation fileInfo = new FileCreationInformation();
+                fileInfo.ContentStream = fs;
+                fileInfo.Url = library.RootFolder.ServerRelativeUrl + "/" + Filename;
+                fileInfo.Overwrite = true;
+                Microsoft.SharePoint.Client.File file = folder.Files.Add(fileInfo);
+
+                var message = "File uploaded";
+                Console.WriteLine(message);
+
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\UploadFileNoMeta.txt"))
+                {
+                    sw.WriteLine(message);
                 }
             }
         }
