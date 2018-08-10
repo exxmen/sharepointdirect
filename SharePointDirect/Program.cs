@@ -295,6 +295,13 @@ namespace SpOnlineDirectConsole
             }
         }
 
+
+        /// <summary>
+        /// gets one item from the list and writes the data to a csv file
+        /// </summary>
+        /// <param name="URL"></param>
+        /// <param name="ListName"></param>
+        /// <param name="SearchTitle"></param>
         public static void GetOneItem(string URL, string ListName, string SearchTitle)
         {
             int itemId;
