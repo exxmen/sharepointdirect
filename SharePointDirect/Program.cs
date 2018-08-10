@@ -24,15 +24,17 @@ namespace SpOnlineDirectConsole
 
             if (args.Length != 0)
             {
-                switch (args[0])
+                string method = args[0].ToLower();
+
+                switch (method)
                 {
-                    case "GetNumberOfItems":
+                    case "getnumberofitems":
                         GetNumberOfItems(args[1], args[2]);
                         break;
-                    case "GetItemId":
+                    case "getitemid":
                         GetItemId(args[1], args[2], args[3]);
                         break;
-                    case "AddItem":
+                    case "additem":
                         var addItemMap = new Dictionary<string, string>();
                         for(int i = 3; i <= args.Length - 1; i+=2)
                         {
@@ -40,12 +42,12 @@ namespace SpOnlineDirectConsole
                         }
                         AddItem(args[1], args[2], addItemMap);
                         break;
-                    case "DeleteItemById":
+                    case "deleteitembyid":
                         int itemId = 0;
                         Int32.TryParse(args[3], out itemId);
                         DeleteItemById(args[1], args[2], itemId);
                         break;
-                    case "UploadFileWithMeta":
+                    case "uploadfilewithmeta":
                         var propertiesMap = new Dictionary<string, string>();
                         for (int i = 4; i <= args.Length - 1; i+=2)
                         {
@@ -53,7 +55,7 @@ namespace SpOnlineDirectConsole
                         }
                         UploadFileWithMeta(args[1], args[2], args[3], propertiesMap);
                         break;
-                    case "GetOneItem":
+                    case "getoneitem":
                         GetOneItem(args[1], args[2], args[3]);
                         break;
                     case "-v":
@@ -81,6 +83,13 @@ namespace SpOnlineDirectConsole
                         Console.WriteLine("Press any key to exit. ");
                         var input = Console.ReadLine();
                         break;
+                }
+            }
+            else
+            {
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\SharePointDirectError.txt"))
+                {
+                    sw.WriteLine("You need to pass at least one argument. \"-h\" to get information on the accepted arguments.");
                 }
             }
         }
