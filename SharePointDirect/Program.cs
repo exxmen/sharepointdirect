@@ -44,6 +44,9 @@ namespace SpOnlineDirectConsole
                         }
                         UploadFileWithMeta(args[1], args[2], args[3], propertiesMap);
                         break;
+                    case "GetOneItem":
+                        GetOneItem(args[1], args[2], args[3]);
+                        break;
                     case "-v":
                         Console.WriteLine("V 0.1");
                         break;
@@ -254,6 +257,12 @@ namespace SpOnlineDirectConsole
             }
         }
 
+        /// <summary>
+        /// uploads the file with no metadata
+        /// </summary>
+        /// <param name="URL"></param>
+        /// <param name="FolderName"></param>
+        /// <param name="Filepath"></param>
         public static void UploadFileNoMeta(string URL, string FolderName, string Filepath)
         {
             string Filename;
@@ -282,6 +291,43 @@ namespace SpOnlineDirectConsole
                 using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\UploadFileNoMeta.txt"))
                 {
                     sw.WriteLine(message);
+                }
+            }
+        }
+
+        public static void GetOneItem(string URL, string ListName, string SearchTitle)
+        {
+            int itemId;
+
+            AuthenticationManager authManager = new AuthenticationManager();
+
+            CamlQuery query = new CamlQuery();
+            var viewXML = "<View><Query><OrderBy><FieldRef Name='Modified' Ascending='FALSE'/></OrderBy><Where><Eq><FieldRef Name='Title' /><Value Type='Text'>" +
+                SearchTitle
+                + "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>";
+            query.ViewXml = viewXML;
+            var context = authManager.GetWebLoginClientContext(URL);
+            Web web = context.Web;
+            List list = web.Lists.GetByTitle(ListName);
+            ListItemCollection listItems = list.GetItems(query);
+            context.Load(listItems);
+            context.ExecuteQuery();
+
+            itemId = listItems[0].Id;
+
+            ListItem item = list.GetItemById(itemId);
+            context.Load(item);
+            context.ExecuteQuery();
+
+
+            using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetOneItem.csv"))
+            {
+                foreach (string fieldName in item.FieldValues.Keys)
+                {
+                    if (fieldName.Equals("Title") || fieldName.Equals("REPROCESS") || fieldName.Equals("Timestamp"))
+                    {
+                        sw.Write(fieldName + "," + item.FieldValues[fieldName] + ",");
+                    }
                 }
             }
         }
