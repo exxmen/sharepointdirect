@@ -1,6 +1,6 @@
-# SharePoint Direct
+# SharePoint Direct CLI
 
-### SharePointDirect is a command line interface that can be used by Robotic Process Automation solutions that do not have the capability to connect to SharePoint Online directly and needs to execute some Sharepoint actions (see functionality below).
+## SharePointDirect is a command line interface that can be used by Robotic Process Automation solutions that do not have the capability to connect to SharePoint Online directly and needs to execute some Sharepoint actions (see functionality below).
 
 ### The CLI was created with C# and uses the CSOM API for .NET.
 
@@ -8,43 +8,43 @@
 
 ### Methods
 
-#### All methods writes the result to the console/textfile/csv file.
+#### All methods writes the result to the console/a textfile/a csv file.
 
 * GetNumberOfItems - Gets the number of items in the provided list.
 * GetItemId - Gets the ID of the item by title
 * AddItem - adds an item to the list
 * DeleteItemById - deletes an item from the list using a provided ID
-* UploadFileWithMeta - uploads a file to a specified library and adds the given properties
+* UploadFileWithMeta - uploads a file to a specified library and adds the given properties (currently only accepts files less than 2MB)
 * UploadFileNoMeta - uploads a file to a specified library with no properties
 * GetOneItem - Gets an item from the list based on a given title and writes the requested field name and field value to a txt file
 * GetOldestItem - Gets the oldest item from the list
 
 ### Usage:
 
-*SharePointDirect args[]*
+**SharePointDirect** *Method args[]*
 
 ### Examples:
 
 #### GetNumberOfItems:
-*SharePointDirect GetNumberOfItems URL Listname*
+**SharePointDirect** *GetNumberOfItems URL Listname*
 
 #### GetItemId:
-*SharePointDirect GetItemId URL Listname ItemTitle*
+**SharePointDirect** *GetItemId URL Listname ItemTitle*
 
 #### AddItem:
-*SharePointDirect AddItem URL Listname Field Value*
+**SharePointDirect** *AddItem URL Listname Field Value*
 
 #### DeleteItemById:
-*SharePointDirect DeleteItemById URL Listname ID*
+**SharePointDirect** *DeleteItemById URL Listname ID*
 
 #### UploadFileWithMeta:
-*SharePointDirect UploadFileWithMeta URL Listname Filepath PropertyKey, PropertyValue...*
+**SharePointDirect** *UploadFileWithMeta URL Listname Filepath PropertyKey, PropertyValue...*
 
 #### UploadFileNoMeta:
-*SharePointDirect UploadFileNoMeta URL Listname Filepath*
+**SharePointDirect** *UploadFileNoMeta URL Listname Filepath*
 
 #### GetOneItem:
-*SharePointDirect GetOneItem URL Listname Title Fields...*
+**SharePointDirect** *GetOneItem URL Listname Title Fields...*
 
 #### GetOldestItem:
-*SharePointDirect GetOldestItem URL Listname*
+**SharePointDirect** *GetOldestItem URL Listname*
