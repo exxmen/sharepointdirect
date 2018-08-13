@@ -172,9 +172,9 @@ namespace SpOnlineDirectConsole
         /// <param name="URL"></param>
         /// <param name="ListName"></param>
         /// <param name="Field"></param>
-        /// <param name="Value"></param>
+        /// <param name="ValuePairs"></param>
         /// <returns></returns>
-        public static void AddItem(string URL, string ListName, Dictionary<string, string> valuePairs)
+        public static void AddItem(string URL, string ListName, Dictionary<string, string> ValuePairs)
         {
             string itemId;
 
@@ -186,7 +186,7 @@ namespace SpOnlineDirectConsole
             ListItemCreationInformation newItemInfo = new ListItemCreationInformation();
             ListItem newItem = list.AddItem(newItemInfo);
 
-            foreach(var pair in valuePairs)
+            foreach(var pair in ValuePairs)
             {
                 newItem["" + pair.Key + ""] = pair.Value;
             }
@@ -240,11 +240,11 @@ namespace SpOnlineDirectConsole
         /// <param name="URL"></param>
         /// <param name="FolderName"></param>
         /// <param name="Filepath"></param>
-        /// <param name="pairs"></param>
+        /// <param name="Pairs"></param>
         /// <remarks>
-        /// the pairs accepts key value pairs of strings only
+        /// the pairs argument accepts key value pairs of strings only
         /// </remarks>
-        public static void UploadFileWithMeta(string URL, string FolderName, string Filepath, Dictionary<string,string> pairs)
+        public static void UploadFileWithMeta(string URL, string FolderName, string Filepath, Dictionary<string,string> Pairs)
         {
             string Filename;
             Filename = Path.GetFileName(Filepath);
@@ -266,7 +266,7 @@ namespace SpOnlineDirectConsole
                 fileInfo.Overwrite = true;
                 Microsoft.SharePoint.Client.File file = folder.Files.Add(fileInfo);
                 
-                foreach (var pair in pairs)
+                foreach (var pair in Pairs)
                 {
                     file.ListItemAllFields["" + pair.Key + ""] = "" + pair.Value +"";
                 }
@@ -329,8 +329,8 @@ namespace SpOnlineDirectConsole
         /// <param name="URL"></param>
         /// <param name="ListName"></param>
         /// <param name="SearchTitle"></param>
-        /// <param name="fieldsToReturn"></param>
-        public static void GetOneItem(string URL, string ListName, string SearchTitle, List<string> fieldsToReturn)
+        /// <param name="FieldsToReturn"></param>
+        public static void GetOneItem(string URL, string ListName, string SearchTitle, List<string> FieldsToReturn)
         {
             int itemId;
 
@@ -357,7 +357,7 @@ namespace SpOnlineDirectConsole
 
             using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetOneItem.txt"))
             {
-                foreach(string field in fieldsToReturn)
+                foreach(string field in FieldsToReturn)
                 {
                     sw.Write(field + ";" + item.FieldValues[field] + ";");
                 }
