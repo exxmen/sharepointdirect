@@ -357,14 +357,6 @@ namespace SpOnlineDirectConsole
 
             using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetOneItem.txt"))
             {
-                //foreach (string fieldName in item.FieldValues.Keys)
-                //{
-                //    if (fieldName.Equals("Title") || fieldName.Equals("REPROCESS") || fieldName.Equals("Timestamp"))
-                //    {
-                //        sw.Write(fieldName + "," + item.FieldValues[fieldName] + ",");
-                //    }
-                //}
-
                 foreach(string field in fieldsToReturn)
                 {
                     sw.Write(field + ";" + item.FieldValues[field] + ";");
