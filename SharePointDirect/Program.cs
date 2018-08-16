@@ -26,6 +26,11 @@ namespace SpOnlineDirectConsole
             {
                 string method = args[0].ToLower();
 
+                if(!Directory.Exists(@"C:\Apps"))
+                {
+                    Directory.CreateDirectory(@"C:\Apps");
+                }
+
                 switch (method)
                 {
                     case "getnumberofitems":
