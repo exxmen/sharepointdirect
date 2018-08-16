@@ -76,7 +76,7 @@ SharePointDirect UploadFileNoMeta URL Listname Filepath
 
 #### GetOneItem:
 ```
-SharePointDirect GetOneItem URL Listname Title Fields...
+SharePointDirect GetOneItem URL Listname FieldName1 FieldName2...
 ```
 
 #### GetOldestItem:
@@ -97,5 +97,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Inspired by Marcin's awesome excel REST API based tool
