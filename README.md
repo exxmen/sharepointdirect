@@ -2,19 +2,6 @@
 
 SharePointDirect is a command line interface that can be used by Robotic Process Automation solutions that do not have the capability to connect to SharePoint Online directly and needs to execute some Sharepoint actions (see functionality below).
 
-## Contributing
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
-
-Please note that you need to have Visual Studio and .NET 4.1 installed on your machine to contribute
-
-```
-git clone https://github.com/exxmen/sharepointdirect.git
-
-cd SharePointDirect
-
-run Build in VS Studio
-```
-
 ## Built with
 * [C#](https://maven.apache.org/) - Language used
 * [CSOM](https://docs.microsoft.com/en-us/sharepoint/dev/sp-add-ins/complete-basic-operations-using-sharepoint-client-library-code) - API used for accessing Sharepoint Online
@@ -90,6 +77,19 @@ SharePointDirect GetOldestItem URL Listname
 
 See also the list of [contributors](https://github.com/exxmen/sharepointdirect/graphs/contributors) who participated in this project.
 
+## Contributing
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+
+Please note that you need to have Visual Studio and .NET 4.1 installed on your machine to contribute
+
+```
+git clone https://github.com/exxmen/sharepointdirect.git
+
+cd SharePointDirect
+
+run Build in VS Studio
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
@@ -97,4 +97,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * Hat tip to anyone whose code was used
-* Inspired by Marcin's awesome excel REST API based tool
+* Inspired by Marcin's awesome Excel SharePoint REST API based tool
