@@ -3,6 +3,7 @@
 SharePointDirect is a command line interface that can be used by Robotic Process Automation solutions that do not have the capability to connect to SharePoint Online directly and needs to execute some Sharepoint actions (see functionality below).
 
 ## Contributing
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 Please note that you need to have Visual Studio and .NET 4.1 installed on your machine to contribute
 
