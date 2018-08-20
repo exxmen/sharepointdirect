@@ -456,11 +456,11 @@ namespace SpOnlineDirectConsole
                 context.ExecuteQuery();
 
 
-                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetOneItem.txt"))
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetOneItem.csv"))
                 {
                     foreach (string field in FieldsToReturn)
                     {
-                        sw.Write(field + ";" + item.FieldValues[field] + ";");
+                        sw.Write(field + "," + item.FieldValues[field] + ",");
                     }
                 }
             }
