@@ -114,24 +114,35 @@ namespace SpOnlineDirectConsole
         /// <param name="ListName"></param>
         public static void GetNumberOfItems(string URL, string ListName)
         {
-            AuthenticationManager authenticationManager = new AuthenticationManager();
-
-            int itemCount = 0;
-
-            var context = authenticationManager.GetWebLoginClientContext(URL);
-            Web web = context.Web;
-            List list = web.Lists.GetByTitle(ListName);
-            context.Load(list);
-            context.ExecuteQuery();
-
-            itemCount = list.ItemCount;
-
-            var message = itemCount.ToString();
-            Console.WriteLine(message);
-
-            using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetNumberOfItemsResult.txt"))
+            try
             {
-                sw.WriteLine(itemCount);
+                AuthenticationManager authenticationManager = new AuthenticationManager();
+
+                int itemCount = 0;
+
+                var context = authenticationManager.GetWebLoginClientContext(URL);
+                Web web = context.Web;
+                List list = web.Lists.GetByTitle(ListName);
+                context.Load(list);
+                context.ExecuteQuery();
+
+                itemCount = list.ItemCount;
+
+                var message = itemCount.ToString();
+                Console.WriteLine(message);
+
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetNumberOfItemsResult.txt"))
+                {
+                    sw.WriteLine(itemCount);
+                }
+            }
+            catch (Exception e)
+            {
+
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetNumberOfItemsResult.txt"))
+                {
+                    sw.WriteLine(e.Message);
+                }
             }
 
         }
@@ -146,28 +157,39 @@ namespace SpOnlineDirectConsole
         {
             string itemId;
 
-            AuthenticationManager authManager = new AuthenticationManager();
-
-            CamlQuery query = new CamlQuery();
-            var viewXML = "<View><Query><OrderBy><FieldRef Name='Modified' Ascending='FALSE'/></OrderBy><Where><Eq><FieldRef Name='Title' /><Value Type='Text'>" +
-                ItemTitle
-                + "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>";
-            query.ViewXml = viewXML;
-            var context = authManager.GetWebLoginClientContext(URL);
-            Web web = context.Web;
-            List list = web.Lists.GetByTitle(ListName);
-            ListItemCollection listItems = list.GetItems(query);
-            context.Load(listItems);
-            context.ExecuteQuery();
-
-            itemId = listItems[0].Id.ToString();
-
-            var message = itemId.ToString();
-            Console.WriteLine(message);
-
-            using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetItemIdResult.txt"))
+            try
             {
-                sw.WriteLine(message);
+                AuthenticationManager authManager = new AuthenticationManager();
+
+                CamlQuery query = new CamlQuery();
+                var viewXML = "<View><Query><OrderBy><FieldRef Name='Modified' Ascending='FALSE'/></OrderBy><Where><Eq><FieldRef Name='Title' /><Value Type='Text'>" +
+                    ItemTitle
+                    + "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>";
+                query.ViewXml = viewXML;
+                var context = authManager.GetWebLoginClientContext(URL);
+                Web web = context.Web;
+                List list = web.Lists.GetByTitle(ListName);
+                ListItemCollection listItems = list.GetItems(query);
+                context.Load(listItems);
+                context.ExecuteQuery();
+
+                itemId = listItems[0].Id.ToString();
+
+                var message = itemId.ToString();
+                Console.WriteLine(message);
+
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetItemIdResult.txt"))
+                {
+                    sw.WriteLine(message);
+                }
+            }
+            catch (Exception e)
+            {
+
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetItemIdResult.txt"))
+                {
+                    sw.WriteLine(e.Message);
+                }
             }
         }
 
@@ -183,31 +205,41 @@ namespace SpOnlineDirectConsole
         {
             string itemId;
 
-            AuthenticationManager authManager = new AuthenticationManager();
-
-            var context = authManager.GetWebLoginClientContext(URL);
-            Web web = context.Web;
-            List list = web.Lists.GetByTitle(ListName);
-            ListItemCreationInformation newItemInfo = new ListItemCreationInformation();
-            ListItem newItem = list.AddItem(newItemInfo);
-
-            foreach(var pair in ValuePairs)
+            try
             {
-                newItem["" + pair.Key + ""] = pair.Value;
+                AuthenticationManager authManager = new AuthenticationManager();
+
+                var context = authManager.GetWebLoginClientContext(URL);
+                Web web = context.Web;
+                List list = web.Lists.GetByTitle(ListName);
+                ListItemCreationInformation newItemInfo = new ListItemCreationInformation();
+                ListItem newItem = list.AddItem(newItemInfo);
+
+                foreach (var pair in ValuePairs)
+                {
+                    newItem["" + pair.Key + ""] = pair.Value;
+                }
+
+                newItem.Update();
+                context.Load(newItem);
+                context.ExecuteQuery();
+
+                itemId = newItem.Id.ToString();
+
+                var message = itemId.ToString();
+                Console.WriteLine(message);
+
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\AddItemResult.txt"))
+                {
+                    sw.WriteLine(message);
+                }
             }
-            
-            newItem.Update();
-            context.Load(newItem);
-            context.ExecuteQuery();
-
-            itemId = newItem.Id.ToString();
-
-            var message = itemId.ToString();
-            Console.WriteLine(message);
-
-            using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\AddItemResult.txt"))
+            catch (Exception e)
             {
-                sw.WriteLine(message);
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\AddItemResult.txt"))
+                {
+                    sw.WriteLine(e.Message);
+                }
             }
         }
 
@@ -220,21 +252,31 @@ namespace SpOnlineDirectConsole
         public static void DeleteItemById(string URL, string ListName, int Id)
         {
 
-            AuthenticationManager authManager = new AuthenticationManager();
-
-            var context = authManager.GetWebLoginClientContext(URL);
-            Web web = context.Web;
-            List list = web.Lists.GetByTitle(ListName);
-            ListItem itemToBeDeleted = list.GetItemById(Id);
-            itemToBeDeleted.DeleteObject();
-            context.ExecuteQuery();
-
-            var message = "Item deleted.";
-            Console.WriteLine(message);
-
-            using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\DeleteItemByIdResult.txt"))
+            try
             {
-                sw.WriteLine(message);
+                AuthenticationManager authManager = new AuthenticationManager();
+
+                var context = authManager.GetWebLoginClientContext(URL);
+                Web web = context.Web;
+                List list = web.Lists.GetByTitle(ListName);
+                ListItem itemToBeDeleted = list.GetItemById(Id);
+                itemToBeDeleted.DeleteObject();
+                context.ExecuteQuery();
+
+                var message = "Item deleted.";
+                Console.WriteLine(message);
+
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\DeleteItemByIdResult.txt"))
+                {
+                    sw.WriteLine(message);
+                }
+            }
+            catch (Exception e)
+            {
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\DeleteItemByIdResult.txt"))
+                {
+                    sw.WriteLine(e.Message);
+                }
             }
 
         }
@@ -252,40 +294,50 @@ namespace SpOnlineDirectConsole
         public static void UploadFileWithMeta(string URL, string FolderName, string Filepath, Dictionary<string,string> Pairs)
         {
             string Filename;
-            Filename = Path.GetFileName(Filepath);
-
-            AuthenticationManager authManager = new AuthenticationManager();
- 
-            var context = authManager.GetWebLoginClientContext(URL);
-            Web web = context.Web;
-            List library = web.Lists.GetByTitle(FolderName);
-            Folder folder = library.RootFolder;
-            context.Load(folder);
-            context.ExecuteQuery();
-
-            using (FileStream fs = new FileStream(Filepath, FileMode.Open))
+            try
             {
-                FileCreationInformation fileInfo = new FileCreationInformation();
-                fileInfo.ContentStream = fs;
-                fileInfo.Url = library.RootFolder.ServerRelativeUrl + "/" + Filename;
-                fileInfo.Overwrite = true;
-                Microsoft.SharePoint.Client.File file = folder.Files.Add(fileInfo);
-                
-                foreach (var pair in Pairs)
-                {
-                    file.ListItemAllFields["" + pair.Key + ""] = "" + pair.Value +"";
-                }
+                Filename = Path.GetFileName(Filepath);
 
-                file.ListItemAllFields.Update();
-                context.Load(file);
+                AuthenticationManager authManager = new AuthenticationManager();
+
+                var context = authManager.GetWebLoginClientContext(URL);
+                Web web = context.Web;
+                List library = web.Lists.GetByTitle(FolderName);
+                Folder folder = library.RootFolder;
+                context.Load(folder);
                 context.ExecuteQuery();
 
-                var message = "File uploaded with metadata";
-                Console.WriteLine(message);
+                using (FileStream fs = new FileStream(Filepath, FileMode.Open))
+                {
+                    FileCreationInformation fileInfo = new FileCreationInformation();
+                    fileInfo.ContentStream = fs;
+                    fileInfo.Url = library.RootFolder.ServerRelativeUrl + "/" + Filename;
+                    fileInfo.Overwrite = true;
+                    Microsoft.SharePoint.Client.File file = folder.Files.Add(fileInfo);
 
+                    foreach (var pair in Pairs)
+                    {
+                        file.ListItemAllFields["" + pair.Key + ""] = "" + pair.Value + "";
+                    }
+
+                    file.ListItemAllFields.Update();
+                    context.Load(file);
+                    context.ExecuteQuery();
+
+                    var message = "File uploaded with metadata";
+                    Console.WriteLine(message);
+
+                    using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\UploadFileWithMetaResult.txt"))
+                    {
+                        sw.WriteLine(message);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
                 using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\UploadFileWithMetaResult.txt"))
                 {
-                    sw.WriteLine(message);
+                    sw.WriteLine(e.Message);
                 }
             }
         }
@@ -299,31 +351,41 @@ namespace SpOnlineDirectConsole
         public static void UploadFileNoMeta(string URL, string FolderName, string Filepath)
         {
             string Filename;
-            Filename = Path.GetFileName(Filepath);
-
-            AuthenticationManager authManager = new AuthenticationManager();
-
-            var context = authManager.GetWebLoginClientContext(URL);
-            Web web = context.Web;
-            List library = web.Lists.GetByTitle(FolderName);
-            Folder folder = library.RootFolder;
-            context.Load(folder);
-            context.ExecuteQuery();
-
-            using (FileStream fs = new FileStream(Filepath, FileMode.Open))
+            try
             {
-                FileCreationInformation fileInfo = new FileCreationInformation();
-                fileInfo.ContentStream = fs;
-                fileInfo.Url = library.RootFolder.ServerRelativeUrl + "/" + Filename;
-                fileInfo.Overwrite = true;
-                Microsoft.SharePoint.Client.File file = folder.Files.Add(fileInfo);
+                Filename = Path.GetFileName(Filepath);
 
-                var message = "File uploaded";
-                Console.WriteLine(message);
+                AuthenticationManager authManager = new AuthenticationManager();
 
+                var context = authManager.GetWebLoginClientContext(URL);
+                Web web = context.Web;
+                List library = web.Lists.GetByTitle(FolderName);
+                Folder folder = library.RootFolder;
+                context.Load(folder);
+                context.ExecuteQuery();
+
+                using (FileStream fs = new FileStream(Filepath, FileMode.Open))
+                {
+                    FileCreationInformation fileInfo = new FileCreationInformation();
+                    fileInfo.ContentStream = fs;
+                    fileInfo.Url = library.RootFolder.ServerRelativeUrl + "/" + Filename;
+                    fileInfo.Overwrite = true;
+                    Microsoft.SharePoint.Client.File file = folder.Files.Add(fileInfo);
+
+                    var message = "File uploaded";
+                    Console.WriteLine(message);
+
+                    using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\UploadFileNoMeta.txt"))
+                    {
+                        sw.WriteLine(message);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
                 using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\UploadFileNoMeta.txt"))
                 {
-                    sw.WriteLine(message);
+                    sw.WriteLine(e.Message);
                 }
             }
         }
@@ -339,32 +401,42 @@ namespace SpOnlineDirectConsole
         {
             int itemId;
 
-            AuthenticationManager authManager = new AuthenticationManager();
-
-            CamlQuery query = new CamlQuery();
-            var viewXML = "<View><Query><OrderBy><FieldRef Name='Modified' Ascending='FALSE'/></OrderBy><Where><Eq><FieldRef Name='Title' /><Value Type='Text'>" +
-                SearchTitle
-                + "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>";
-            query.ViewXml = viewXML;
-            var context = authManager.GetWebLoginClientContext(URL);
-            Web web = context.Web;
-            List list = web.Lists.GetByTitle(ListName);
-            ListItemCollection listItems = list.GetItems(query);
-            context.Load(listItems);
-            context.ExecuteQuery();
-
-            itemId = listItems[0].Id;
-
-            ListItem item = list.GetItemById(itemId);
-            context.Load(item);
-            context.ExecuteQuery();
-
-
-            using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetOneItem.txt"))
+            try
             {
-                foreach(string field in FieldsToReturn)
+                AuthenticationManager authManager = new AuthenticationManager();
+
+                CamlQuery query = new CamlQuery();
+                var viewXML = "<View><Query><OrderBy><FieldRef Name='Modified' Ascending='FALSE'/></OrderBy><Where><Eq><FieldRef Name='Title' /><Value Type='Text'>" +
+                    SearchTitle
+                    + "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>";
+                query.ViewXml = viewXML;
+                var context = authManager.GetWebLoginClientContext(URL);
+                Web web = context.Web;
+                List list = web.Lists.GetByTitle(ListName);
+                ListItemCollection listItems = list.GetItems(query);
+                context.Load(listItems);
+                context.ExecuteQuery();
+
+                itemId = listItems[0].Id;
+
+                ListItem item = list.GetItemById(itemId);
+                context.Load(item);
+                context.ExecuteQuery();
+
+
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetOneItem.txt"))
                 {
-                    sw.Write(field + ";" + item.FieldValues[field] + ";");
+                    foreach (string field in FieldsToReturn)
+                    {
+                        sw.Write(field + ";" + item.FieldValues[field] + ";");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetOneItem.txt"))
+                {
+                    sw.WriteLine(e.Message);
                 }
             }
         }
@@ -378,27 +450,37 @@ namespace SpOnlineDirectConsole
         {
             int itemId;
 
-            AuthenticationManager authManager = new AuthenticationManager();
-
-            CamlQuery query = new CamlQuery();
-            var viewXML = "<View><Query><OrderBy><FieldRef Name='Created' Ascending='TRUE'/></OrderBy></Query><RowLimit>1</RowLimit></View>";
-            query.ViewXml = viewXML;
-            var context = authManager.GetWebLoginClientContext(URL);
-            Web web = context.Web;
-            List list = web.Lists.GetByTitle(ListName);
-            ListItemCollection listItems = list.GetItems(query);
-            context.Load(listItems);
-            context.ExecuteQuery();
-
-            itemId = listItems[0].Id;
-
-            ListItem item = list.GetItemById(itemId);
-            context.Load(item);
-            context.ExecuteQuery();
-
-            using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetOldestItem.txt"))
+            try
             {
-                sw.Write(itemId + ";" + item.FieldValues["Title"]);
+                AuthenticationManager authManager = new AuthenticationManager();
+
+                CamlQuery query = new CamlQuery();
+                var viewXML = "<View><Query><OrderBy><FieldRef Name='Created' Ascending='TRUE'/></OrderBy></Query><RowLimit>1</RowLimit></View>";
+                query.ViewXml = viewXML;
+                var context = authManager.GetWebLoginClientContext(URL);
+                Web web = context.Web;
+                List list = web.Lists.GetByTitle(ListName);
+                ListItemCollection listItems = list.GetItems(query);
+                context.Load(listItems);
+                context.ExecuteQuery();
+
+                itemId = listItems[0].Id;
+
+                ListItem item = list.GetItemById(itemId);
+                context.Load(item);
+                context.ExecuteQuery();
+
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetOldestItem.txt"))
+                {
+                    sw.Write(itemId + ";" + item.FieldValues["Title"]);
+                }
+            }
+            catch (Exception e)
+            {
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetOldestItem.txt"))
+                {
+                    sw.WriteLine(e.Message);
+                }
             }
         }
     }
