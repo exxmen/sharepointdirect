@@ -1,18 +1,6 @@
-# SharePoint Direct CLI
+# SharePointDirect CLI
 
 SharePointDirect is a command line interface that can be used by Robotic Process Automation solutions that do not have the capability to connect to SharePoint Online directly and needs to execute some Sharepoint actions (see functionality below).
-
-## Contributing
-
-Please note that you need to have Visual Studio and .NET 4.1 installed on your machine to contribute
-
-```
-git clone https://github.com/exxmen/sharepointdirect.git
-
-cd SharePointDirect
-
-run Build in VS Studio
-```
 
 ## Built with
 * [C#](https://maven.apache.org/) - Language used
@@ -35,9 +23,9 @@ run Build in VS Studio
 ## Usage:
 
 ```
-copy the debug/release (depending on which selection you used when you built the project) folder to any destination
+copy the debug/release folder to any destination then rename it
 
-cd [destination folder]
+cd [renamed folder]
 
 SharePointDirect Method args[]
 
@@ -75,7 +63,7 @@ SharePointDirect UploadFileNoMeta URL Listname Filepath
 
 #### GetOneItem:
 ```
-SharePointDirect GetOneItem URL Listname Title Fields...
+SharePointDirect GetOneItem URL Listname FieldName1 FieldName2...
 ```
 
 #### GetOldestItem:
@@ -89,6 +77,19 @@ SharePointDirect GetOldestItem URL Listname
 
 See also the list of [contributors](https://github.com/exxmen/sharepointdirect/graphs/contributors) who participated in this project.
 
+## Contributing
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+
+Please note that you need to have Visual Studio and .NET 4.1 installed on your machine to contribute
+
+```
+git clone https://github.com/exxmen/sharepointdirect.git
+
+cd SharePointDirect
+
+run Build in VS Studio
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
@@ -96,5 +97,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Inspired by Marcin's awesome Excel SharePoint REST API based tool
