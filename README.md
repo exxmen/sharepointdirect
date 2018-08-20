@@ -11,9 +11,9 @@ SharePointDirect is a command line interface that can be used by Robotic Process
 
 ### All methods writes the result to the console or a textfile or to a csv file.
 
-* **GetNumberOfItems** - Gets the number of items in the provided list. Writes the result to **_C:\Apps\GetNumberOfItemst.txt_**
-* **GetItemId** - Gets the ID of the item by title. Writes the result to **_C:\Apps\GetItemIdt.txt_**
-* **AddItem** - adds an item to the list Writes the result to **_C:\Apps\AddItemt.txt_**
+* **GetNumberOfItems** - Gets the number of items in the provided list. Writes the result to **_C:\Apps\GetNumberOfItems.txt_**
+* **GetItemId** - Gets the ID of the item by title. Writes the result to **_C:\Apps\GetItemId.txt_**
+* **AddItem** - adds an item to the list Writes the result to **_C:\Apps\AddItem.txt_**
 * **DeleteItemById** - deletes an item from the list using a provided ID.  Writes the result to **_C:\Apps\DeleteItemById.txt_**
 * **UploadFileWithMeta** - uploads a file to a specified library and adds the given properties.  Writes the result to **_C:\Apps\UploadFileWithMeta.txt_**. Please note that the current version does not work when uploading to sub folders.
 * **UploadFileNoMeta** - uploads a file to a specified library with no properties. Writes the result to **_C:\Apps\UploadFileNoMeta.txt_**. Please note that the current version does not work when uploading to sub folders.
