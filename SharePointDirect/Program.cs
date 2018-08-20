@@ -15,98 +15,114 @@ namespace SpOnlineDirectConsole
     {
         static void Main(string[] args)
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
-
-            string version;
-
-            version = fileVersionInfo.ProductVersion;
-
-            if (args.Length != 0)
+            try
             {
-                string method = args[0].ToLower();
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
 
-                if(!Directory.Exists(@"C:\Apps"))
+                string version;
+
+                version = fileVersionInfo.ProductVersion;
+
+                if (args.Length != 0)
                 {
-                    Directory.CreateDirectory(@"C:\Apps");
+                    string method = args[0].ToLower();
+
+                    if (!Directory.Exists(@"C:\Apps"))
+                    {
+                        Directory.CreateDirectory(@"C:\Apps");
+                    }
+
+                    switch (method)
+                    {
+                        case "getnumberofitems":
+                            GetNumberOfItems(args[1], args[2]);
+                            break;
+                        case "getitemid":
+                            GetItemId(args[1], args[2], args[3]);
+                            break;
+                        case "additem":
+                            var addItemMap = new Dictionary<string, string>();
+                            for (int i = 3; i <= args.Length - 1; i += 2)
+                            {
+                                addItemMap.Add(args[i], args[i + 1]);
+                            }
+                            AddItem(args[1], args[2], addItemMap);
+                            break;
+                        case "deleteitembyid":
+                            int itemId = 0;
+                            Int32.TryParse(args[3], out itemId);
+                            DeleteItemById(args[1], args[2], itemId);
+                            break;
+                        case "uploadfilewithmeta":
+                            var propertiesMap = new Dictionary<string, string>();
+                            for (int i = 4; i <= args.Length - 1; i += 2)
+                            {
+                                propertiesMap.Add(args[i], args[i + 1]);
+                            }
+                            UploadFileWithMeta(args[1], args[2], args[3], propertiesMap);
+                            break;
+                        case "getoneitem":
+                            var fieldsToReturn = new List<string>();
+                            for (int i = 4; i < args.Length; i++)
+                            {
+                                fieldsToReturn.Add(args[i]);
+                            }
+                            GetOneItem(args[1], args[2], args[3], fieldsToReturn);
+                            break;
+                        case "getoldestitem":
+                            GetOldestItem(args[1], args[2]);
+                            break;
+                        case "uploadfilenometa":
+                            UploadFileNoMeta(args[1], args[2], args[3]);
+                            break;
+                        case "-v":
+                            Console.WriteLine(version);
+                            break;
+                        case "-h":
+                            Console.WriteLine(" ");
+                            Console.WriteLine("Welcome to the SharePointDirect CLI. ");
+                            Console.WriteLine("This tool is brought to you by Exx Navarro. ");
+                            Console.WriteLine(" ");
+                            Console.WriteLine("use -v to check tool version");
+                            Console.WriteLine(" ");
+                            Console.WriteLine("to use the CLI, use one of the choices below as the first argument, the second argument should be the url, the third argument is the list or library name. The arguments that are needed for the specific function comes after these 3 required arguments.");
+                            Console.WriteLine(" ");
+                            Console.WriteLine("use \"GetNumberOfItems\" to get the number of items in a list");
+                            Console.WriteLine("use \"GetItemId\" to get the ID for a certain item by using the title as the criteria. ");
+                            Console.WriteLine("use \"AddItem\" to add a new item to the list. ");
+                            Console.WriteLine("use \"DeleteItemById\" to delete and item from the list using the item ID. ");
+                            Console.WriteLine("use \"UploadFileWithMeta\" to upload a file and include metadata. ");
+                            Console.WriteLine("use \"UploadFileNoMeta\" to upload a file with no defined metadata. ");
+                            Console.WriteLine("use \"GetOneItem\" to get an item from the list based on the title. ");
+                            Console.WriteLine("use \"GetOldestItem\" to get the oldest item from the list based on the title. ");
+                            Console.WriteLine(" ");
+                            Console.WriteLine("More information on this link: https://github.com/exxmen/sharepointdirect/blob/master/README.md");
+                            Console.WriteLine(" ");
+                            Console.WriteLine("Press ENTER key to exit. ");
+                            var input = Console.ReadLine();
+                            break;
+                    }
                 }
-
-                switch (method)
+                else
                 {
-                    case "getnumberofitems":
-                        GetNumberOfItems(args[1], args[2]);
-                        break;
-                    case "getitemid":
-                        GetItemId(args[1], args[2], args[3]);
-                        break;
-                    case "additem":
-                        var addItemMap = new Dictionary<string, string>();
-                        for(int i = 3; i <= args.Length - 1; i+=2)
-                        {
-                            addItemMap.Add(args[i], args[i + 1]);
-                        }
-                        AddItem(args[1], args[2], addItemMap);
-                        break;
-                    case "deleteitembyid":
-                        int itemId = 0;
-                        Int32.TryParse(args[3], out itemId);
-                        DeleteItemById(args[1], args[2], itemId);
-                        break;
-                    case "uploadfilewithmeta":
-                        var propertiesMap = new Dictionary<string, string>();
-                        for (int i = 4; i <= args.Length - 1; i+=2)
-                        {
-                            propertiesMap.Add(args[i], args[i + 1]);
-                        }
-                        UploadFileWithMeta(args[1], args[2], args[3], propertiesMap);
-                        break;
-                    case "getoneitem":
-                        var fieldsToReturn = new List<string>();
-                        for(int i = 4; i < args.Length; i++)
-                        {
-                            fieldsToReturn.Add(args[i]);
-                        }
-                        GetOneItem(args[1], args[2], args[3], fieldsToReturn);
-                        break;
-                    case "getoldestitem":
-                        GetOldestItem(args[1], args[2]);
-                        break;
-                    case "uploadfilenometa":
-                        UploadFileNoMeta(args[1], args[2], args[3]);
-                        break;
-                    case "-v":
-                        Console.WriteLine(version);
-                        break;
-                    case "-h":
-                        Console.WriteLine(" ");
-                        Console.WriteLine("Welcome to the SharePointDirect CLI. ");
-                        Console.WriteLine("This tool is brought to you by Exx Navarro. ");
-                        Console.WriteLine(" ");
-                        Console.WriteLine("use -v to check tool version");
-                        Console.WriteLine(" ");
-                        Console.WriteLine("to use the CLI, use one of the choices below as the first argument, the second argument should be the url, the third argument is the list or library name. The arguments that are needed for the specific function comes after these 3 required arguments.");
-                        Console.WriteLine(" ");
-                        Console.WriteLine("use \"GetNumberOfItems\" to get the number of items in a list");
-                        Console.WriteLine("use \"GetItemId\" to get the ID for a certain item by using the title as the criteria. ");
-                        Console.WriteLine("use \"AddItem\" to add a new item to the list. ");
-                        Console.WriteLine("use \"DeleteItemById\" to delete and item from the list using the item ID. ");
-                        Console.WriteLine("use \"UploadFileWithMeta\" to upload a file and include metadata. ");
-                        Console.WriteLine("use \"UploadFileNoMeta\" to upload a file with no defined metadata. ");
-                        Console.WriteLine("use \"GetOneItem\" to get an item from the list based on the title. ");
-                        Console.WriteLine("use \"GetOldestItem\" to get the oldest item from the list based on the title. ");
-                        Console.WriteLine(" ");
-                        Console.WriteLine("More information on this link: https://github.com/exxmen/sharepointdirect/blob/master/README.md");
-                        Console.WriteLine(" ");
-                        Console.WriteLine("Press any key to exit. ");
+                    using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\SharePointDirectError.txt"))
+                    {
+                        Console.WriteLine("Error: You need to pass at least one argument. \"-h\" to get information on the accepted arguments.");
+                        Console.WriteLine("Press ENTER key to exit. ");
                         var input = Console.ReadLine();
-                        break;
+                        sw.WriteLine("Error: You need to pass at least one argument. \"-h\" to get information on the accepted arguments.");
+                    }
                 }
             }
-            else
+            catch (Exception e)
             {
                 using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\SharePointDirectError.txt"))
                 {
-                    sw.WriteLine("You need to pass at least one argument. \"-h\" to get information on the accepted arguments.");
+                    Console.WriteLine("Error: " + e.Message);
+                    Console.WriteLine("Press ENTER key to exit. ");
+                    var input = Console.ReadLine();
+                    sw.WriteLine("Error: " + e.Message);
                 }
             }
         }
@@ -135,7 +151,7 @@ namespace SpOnlineDirectConsole
                 var message = itemCount.ToString();
                 Console.WriteLine(message);
 
-                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetNumberOfItemsResult.txt"))
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetNumberOfItems.txt"))
                 {
                     sw.WriteLine(itemCount);
                 }
@@ -143,9 +159,9 @@ namespace SpOnlineDirectConsole
             catch (Exception e)
             {
 
-                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetNumberOfItemsResult.txt"))
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetNumberOfItems.txt"))
                 {
-                    sw.WriteLine(e.Message);
+                    sw.WriteLine("Error: " + e.Message);
                 }
             }
 
@@ -182,7 +198,7 @@ namespace SpOnlineDirectConsole
                 var message = itemId.ToString();
                 Console.WriteLine(message);
 
-                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetItemIdResult.txt"))
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetItemId.txt"))
                 {
                     sw.WriteLine(message);
                 }
@@ -190,9 +206,9 @@ namespace SpOnlineDirectConsole
             catch (Exception e)
             {
 
-                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetItemIdResult.txt"))
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetItemId.txt"))
                 {
-                    sw.WriteLine(e.Message);
+                    sw.WriteLine("Error: " + e.Message);
                 }
             }
         }
@@ -233,16 +249,16 @@ namespace SpOnlineDirectConsole
                 var message = itemId.ToString();
                 Console.WriteLine(message);
 
-                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\AddItemResult.txt"))
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\AddItem.txt"))
                 {
                     sw.WriteLine(message);
                 }
             }
             catch (Exception e)
             {
-                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\AddItemResult.txt"))
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\AddItem.txt"))
                 {
-                    sw.WriteLine(e.Message);
+                    sw.WriteLine("Error: " + e.Message);
                 }
             }
         }
@@ -270,16 +286,16 @@ namespace SpOnlineDirectConsole
                 var message = "Item deleted.";
                 Console.WriteLine(message);
 
-                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\DeleteItemByIdResult.txt"))
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\DeleteItemById.txt"))
                 {
                     sw.WriteLine(message);
                 }
             }
             catch (Exception e)
             {
-                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\DeleteItemByIdResult.txt"))
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\DeleteItemById.txt"))
                 {
-                    sw.WriteLine(e.Message);
+                    sw.WriteLine("Error: " + e.Message);
                 }
             }
 
@@ -336,7 +352,7 @@ namespace SpOnlineDirectConsole
                     var message = "File uploaded with metadata";
                     Console.WriteLine(message);
 
-                    using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\UploadFileWithMetaResult.txt"))
+                    using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\UploadFileWithMeta.txt"))
                     {
                         sw.WriteLine(message);
                     }
@@ -344,9 +360,9 @@ namespace SpOnlineDirectConsole
             }
             catch (Exception e)
             {
-                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\UploadFileWithMetaResult.txt"))
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\UploadFileWithMeta.txt"))
                 {
-                    sw.WriteLine(e.Message);
+                    sw.WriteLine("Error: " + e.Message);
                 }
             }
         }
@@ -401,7 +417,7 @@ namespace SpOnlineDirectConsole
             {
                 using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\UploadFileNoMeta.txt"))
                 {
-                    sw.WriteLine(e.Message);
+                    sw.WriteLine("Error: " + e.Message);
                 }
             }
         }
@@ -452,7 +468,7 @@ namespace SpOnlineDirectConsole
             {
                 using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetOneItem.txt"))
                 {
-                    sw.WriteLine(e.Message);
+                    sw.WriteLine("Error: " + e.Message);
                 }
             }
         }
@@ -488,14 +504,15 @@ namespace SpOnlineDirectConsole
 
                 using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetOldestItem.txt"))
                 {
-                    sw.Write(itemId + ";" + item.FieldValues["Title"]);
+                    //sw.Write(itemId + ";" + item.FieldValues["Title"]);
+                    sw.Write(item.FieldValues["Title"]);
                 }
             }
             catch (Exception e)
             {
                 using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetOldestItem.txt"))
                 {
-                    sw.WriteLine(e.Message);
+                    sw.WriteLine("Error: " + e.Message);
                 }
             }
         }
