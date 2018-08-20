@@ -98,5 +98,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
+* Hat tip to anyone whose code was used. If you want to be mentioned, please let me know.
 * Inspired by Marcin's awesome Excel SharePoint REST API based tool
