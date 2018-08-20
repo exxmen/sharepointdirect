@@ -71,6 +71,9 @@ namespace SpOnlineDirectConsole
                     case "getoldestitem":
                         GetOldestItem(args[1], args[2]);
                         break;
+                    case "uploadfilenometa":
+                        UploadFileNoMeta(args[1], args[2], args[3]);
+                        break;
                     case "-v":
                         Console.WriteLine(version);
                         break;
@@ -90,6 +93,7 @@ namespace SpOnlineDirectConsole
                         Console.WriteLine("use \"UploadFileWithMeta\" to upload a file and include metadata. ");
                         Console.WriteLine("use \"UploadFileNoMeta\" to upload a file with no defined metadata. ");
                         Console.WriteLine("use \"GetOneItem\" to get an item from the list based on the title. ");
+                        Console.WriteLine("use \"GetOldestItem\" to get the oldest item from the list based on the title. ");
                         Console.WriteLine(" ");
                         Console.WriteLine("More information on this link: https://github.com/exxmen/sharepointdirect/blob/master/README.md");
                         Console.WriteLine(" ");
@@ -162,7 +166,7 @@ namespace SpOnlineDirectConsole
                 AuthenticationManager authManager = new AuthenticationManager();
 
                 CamlQuery query = new CamlQuery();
-                var viewXML = "<View><Query><OrderBy><FieldRef Name='Modified' Ascending='FALSE'/></OrderBy><Where><Eq><FieldRef Name='Title' /><Value Type='Text'>" +
+                var viewXML = "<View><Query><OrderBy><FieldRef Name='Modified' Ascending='FALSE'/></OrderBy><Where><Eq><FieldRef Name='Title'/><Value Type='Text'>" +
                     ItemTitle
                     + "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>";
                 query.ViewXml = viewXML;
