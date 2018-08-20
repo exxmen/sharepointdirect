@@ -328,6 +328,11 @@ namespace SpOnlineDirectConsole
                     context.Load(file);
                     context.ExecuteQuery();
 
+                    if (file.CheckOutType != CheckOutType.None)
+                    {
+                        file.CheckIn(string.Empty, CheckinType.MajorCheckIn);
+                    }
+
                     var message = "File uploaded with metadata";
                     Console.WriteLine(message);
 
@@ -375,6 +380,13 @@ namespace SpOnlineDirectConsole
                     fileInfo.Url = library.RootFolder.ServerRelativeUrl + "/" + Filename;
                     fileInfo.Overwrite = true;
                     Microsoft.SharePoint.Client.File file = folder.Files.Add(fileInfo);
+                    context.Load(file);
+                    context.ExecuteQuery();
+
+                    if (file.CheckOutType != CheckOutType.None)
+                    {
+                        file.CheckIn(string.Empty, CheckinType.MajorCheckIn);
+                    }
 
                     var message = "File uploaded";
                     Console.WriteLine(message);
