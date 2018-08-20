@@ -23,6 +23,8 @@ SharePointDirect is a command line interface that can be used by Robotic Process
 ## Usage:
 
 ```
+Build the Solution
+
 copy the debug/release folder to any destination then rename it
 
 cd [renamed folder]
