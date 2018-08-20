@@ -11,14 +11,14 @@ SharePointDirect is a command line interface that can be used by Robotic Process
 
 ### All methods writes the result to the console or a textfile or to a csv file.
 
-* GetNumberOfItems - Gets the number of items in the provided list. Writes the result to C:\Apps\GetNumberOfItemsResult.txt
-* GetItemId - Gets the ID of the item by title. Writes the result to C:\Apps\GetItemIdResult.txt
-* AddItem - adds an item to the list Writes the result to C:\Apps\AddItemResult.txt
-* DeleteItemById - deletes an item from the list using a provided ID.  Writes the result to C:\Apps\DeleteItemByIdResult.txt
-* UploadFileWithMeta - uploads a file to a specified library and adds the given properties.  Writes the result to C:\Apps\UploadFileWithMetaResult.txt
-* UploadFileNoMeta - uploads a file to a specified library with no properties. Writes the result to C:\Apps\UploadFileNoMetaResult.txt
-* GetOneItem - Gets an item from the list based on a given title and writes the requested field name and field value to a txt file. Writes the result to C:\Apps\GetOneItemResult.txt
-* GetOldestItem - Gets the oldest item from the list. Writes the result to C:\Apps\GetOldestItemResult.txt. Result text will be separated by ;
+* GetNumberOfItems - Gets the number of items in the provided list. Writes the result to _C:\Apps\GetNumberOfItemst.txt_
+* GetItemId - Gets the ID of the item by title. Writes the result to _C:\Apps\GetItemIdt.txt_
+* AddItem - adds an item to the list Writes the result to _C:\Apps\AddItemt.txt_
+* DeleteItemById - deletes an item from the list using a provided ID.  Writes the result to _C:\Apps\DeleteItemById.txt_
+* UploadFileWithMeta - uploads a file to a specified library and adds the given properties.  Writes the result to _C:\Apps\UploadFileWithMeta.txt_. Please note that the current version does not work when uploading to sub folders.
+* UploadFileNoMeta - uploads a file to a specified library with no properties. Writes the result to _C:\Apps\UploadFileNoMeta.txt_. Please note that the current version does not work when uploading to sub folders.
+* GetOneItem - Gets an item from the list based on a given title and writes the requested field name and field value to a txt file. Writes the result to _C:\Apps\GetOneItem.txt_
+* GetOldestItem - Gets the oldest item from the list. When successful, writes the result to _C:\Apps\GetOldestItem.csv_.
 
 ## Usage:
 
@@ -28,7 +28,6 @@ copy the debug/release folder to any destination then rename it
 cd [renamed folder]
 
 SharePointDirect Method args[]
-
 ```
 
 In your Robotic Process Automation solution, execute the program via the command prompt with the required arguments
