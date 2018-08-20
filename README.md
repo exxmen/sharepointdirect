@@ -1,6 +1,6 @@
 # SharePointDirect CLI
 
-SharePointDirect is a command line interface that can be used by Robotic Process Automation solutions that do not have the capability to connect to SharePoint Online directly and needs to execute some Sharepoint actions (see functionality below).
+SharePointDirect is a command line interface that can be used by Robotic Process Automation solutions that do not have the capability to connect to SharePoint Online directly and needs to execute some Sharepoint actions (see functionalities/methods available below).
 
 ## Built with
 * [C#](https://maven.apache.org/) - Language used
