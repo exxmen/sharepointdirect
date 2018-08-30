@@ -77,30 +77,53 @@ namespace SpOnlineDirectConsole
                             UploadFileNoMeta(args[1], args[2], args[3]);
                             break;
                         case "-v":
+                        case "--version":
                             Console.WriteLine(version);
+                            Console.WriteLine("Press any key to exit. ");
+                            Console.ReadKey();
                             break;
                         case "-h":
+                        case "--help":
                             Console.WriteLine(" ");
                             Console.WriteLine("Welcome to the SharePointDirect CLI. ");
-                            Console.WriteLine("This tool is brought to you by Exx Navarro. ");
+                            Console.WriteLine("This tool is brought to you by Exx Navarro (and contributors). ");
                             Console.WriteLine(" ");
-                            Console.WriteLine("use -v to check tool version");
+                            Console.WriteLine("use -h or --help to show this screen");
+                            Console.WriteLine("use -v or --version to check CLI version");
                             Console.WriteLine(" ");
-                            Console.WriteLine("to use the CLI, use one of the choices below as the first argument, the second argument should be the url, the third argument is the list or library name. The arguments that are needed for the specific function comes after these 3 required arguments.");
+                            Console.WriteLine("Usage:");
+                            Console.WriteLine("SharePointDirect [method] <options>");
+                            Console.WriteLine(" ");
+                            Console.WriteLine("Methods:");
                             Console.WriteLine(" ");
                             Console.WriteLine("use \"GetNumberOfItems\" to get the number of items in a list");
+                            Console.WriteLine("Example: SharePointDirect GetNumberOfItems <URL> <Listname>");
+                            Console.WriteLine(" ");
                             Console.WriteLine("use \"GetItemId\" to get the ID for a certain item by using the title as the criteria. ");
+                            Console.WriteLine("Example: SharePointDirect GetItemId <URL> <Listname> <Title>");
+                            Console.WriteLine(" ");
                             Console.WriteLine("use \"AddItem\" to add a new item to the list. ");
+                            Console.WriteLine("Example: SharePointDirect GetItemId <URL> <Listname> <Field1> <Value1> <...>");
+                            Console.WriteLine(" ");
                             Console.WriteLine("use \"DeleteItemById\" to delete and item from the list using the item ID. ");
+                            Console.WriteLine("Example: SharePointDirect DeleteItemById <URL> <Listname> <ID>");
+                            Console.WriteLine(" ");
                             Console.WriteLine("use \"UploadFileWithMeta\" to upload a file and include metadata. ");
+                            Console.WriteLine("Example: SharePointDirect UploadFileWithMeta <URL> <Listname> <Property1> <Property2> <...>");
+                            Console.WriteLine(" ");
                             Console.WriteLine("use \"UploadFileNoMeta\" to upload a file with no defined metadata. ");
+                            Console.WriteLine("Example: SharePointDirect UploadFileNoMeta <URL> <Listname>");
+                            Console.WriteLine(" ");
                             Console.WriteLine("use \"GetOneItem\" to get an item from the list based on the title. ");
+                            Console.WriteLine("Example: SharePointDirect GetOneItem <URL> <Listname> <Field1> <Value1> <...>");
+                            Console.WriteLine(" ");
                             Console.WriteLine("use \"GetOldestItem\" to get the oldest item from the list based on the title. ");
+                            Console.WriteLine("Example: SharePointDirect GetOldestItem <URL> <Listname>");
                             Console.WriteLine(" ");
                             Console.WriteLine("More information on this link: https://github.com/exxmen/sharepointdirect/blob/master/README.md");
                             Console.WriteLine(" ");
-                            Console.WriteLine("Press ENTER key to exit. ");
-                            var input = Console.ReadLine();
+                            Console.WriteLine("Press any key to exit. ");
+                            Console.ReadKey();
                             break;
                     }
                 }
@@ -376,10 +399,11 @@ namespace SpOnlineDirectConsole
         public static void UploadFileNoMeta(string URL, string FolderName, string Filepath)
         {
             string Filename;
+
             try
             {
                 Filename = Path.GetFileName(Filepath);
-
+                                
                 AuthenticationManager authManager = new AuthenticationManager();
 
                 var context = authManager.GetWebLoginClientContext(URL);
