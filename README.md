@@ -29,7 +29,7 @@ copy the debug/release folder to any destination then rename it
 
 cd [renamed folder]
 
-SharePointDirect Method args[]
+SharePointDirect [Method] <options>
 ```
 
 In your Robotic Process Automation solution, execute the program via the command prompt with the required arguments
@@ -57,7 +57,7 @@ SharePointDirect DeleteItemById URL Listname ID
 ```
 #### UploadFileWithMeta:
 ```
-SharePointDirect UploadFileWithMeta URL Listname Filepath PropertyKey, PropertyValue...
+SharePointDirect UploadFileWithMeta URL Listname Filepath <PropertyKey, PropertyValue>...
 ```
 
 #### UploadFileNoMeta:
@@ -67,7 +67,7 @@ SharePointDirect UploadFileNoMeta URL Listname Filepath
 
 #### GetOneItem:
 ```
-SharePointDirect GetOneItem URL Listname FieldName1 FieldName2...
+SharePointDirect GetOneItem URL Listname <FieldName1 FieldName2>...
 ```
 
 #### GetOldestItem:
