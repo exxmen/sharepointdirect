@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharePointDirect", "SharePointDirect\SharePointDirect.csproj", "{197FA270-62B9-4EC4-AF65-1EC09E057CF7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharePointDirectTest", "SharePointDirectTest\SharePointDirectTest.csproj", "{5C20A389-3814-4188-9989-6D0F4E91F5E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{197FA270-62B9-4EC4-AF65-1EC09E057CF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{197FA270-62B9-4EC4-AF65-1EC09E057CF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{197FA270-62B9-4EC4-AF65-1EC09E057CF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C20A389-3814-4188-9989-6D0F4E91F5E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C20A389-3814-4188-9989-6D0F4E91F5E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C20A389-3814-4188-9989-6D0F4E91F5E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C20A389-3814-4188-9989-6D0F4E91F5E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
