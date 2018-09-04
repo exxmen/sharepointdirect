@@ -109,10 +109,10 @@ namespace SpOnlineDirectConsole
                             Console.WriteLine("Example: SharePointDirect DeleteItemById <URL> <Listname> <ID>");
                             Console.WriteLine(" ");
                             Console.WriteLine("use \"UploadFileWithMeta\" to upload a file and include metadata. ");
-                            Console.WriteLine("Example: SharePointDirect UploadFileWithMeta <URL> <Listname> <Property1> <Property2> <...>");
+                            Console.WriteLine("Example: SharePointDirect UploadFileWithMeta <URL> <Listname> <Filepath> <Property1> <Property2> <...>");
                             Console.WriteLine(" ");
                             Console.WriteLine("use \"UploadFileNoMeta\" to upload a file with no defined metadata. ");
-                            Console.WriteLine("Example: SharePointDirect UploadFileNoMeta <URL> <Listname>");
+                            Console.WriteLine("Example: SharePointDirect UploadFileNoMeta <URL> <Listname> <Filepath>");
                             Console.WriteLine(" ");
                             Console.WriteLine("use \"GetOneItem\" to get an item from the list based on the title. ");
                             Console.WriteLine("Example: SharePointDirect GetOneItem <URL> <Listname> <Field1> <Value1> <...>");
