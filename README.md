@@ -11,6 +11,8 @@ SharePointDirect is a command line interface that can be used by Robotic Process
 
 ### All methods writes the result to the console or a textfile or to a csv file.
 
+### Please note that column IDs should be provided instead of column names.
+
 * **GetNumberOfItems** - Gets the number of items in the provided list. Writes the result to **_C:\Apps\GetNumberOfItems.txt_**
 * **GetItemId** - Gets the ID of the item by title. Writes the result to **_C:\Apps\GetItemId.txt_**
 * **AddItem** - adds an item to the list Writes the result to **_C:\Apps\AddItem.txt_**
@@ -19,6 +21,7 @@ SharePointDirect is a command line interface that can be used by Robotic Process
 * **UploadFileNoMeta** - uploads a file to a specified library with no properties. Writes the result to **_C:\Apps\UploadFileNoMeta.txt_**. Please note that the current version does not work when uploading to sub folders.
 * **GetOneIte**m - Gets an item from the list based on a given title and writes the requested field name and field value to a txt file. Writes the result to **_C:\Apps\GetOneItem.txt_**.
 * **GetOldestItem** - Gets the oldest item from the list. When successful, writes the result to **_C:\Apps\GetOldestItem.csv_**.
+* **GetItems** - Gets the x number of items from provided list based on the columns provided. When successful, writes the result to **_C:\Apps\GetItems.csv_**.
 
 ## Usage:
 
@@ -75,6 +78,11 @@ SharePointDirect GetOneItem URL Listname <FieldName1 FieldName2>...
 SharePointDirect GetOldestItem URL Listname
 ```
 
+#### GetItems:
+```
+SharePointDirect GetItems URL Listname NumberOfRows <Column1 Column2 Column... >
+```
+
 ## Authors
 
 * **Exx Navarro** - *Initial work* - [exxmen](https://github.com/exxmen)
@@ -84,7 +92,7 @@ See also the list of [contributors](https://github.com/exxmen/sharepointdirect/g
 ## Contributing
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
-Please note that you need to have Visual Studio and .NET 4.1 installed on your machine to contribute
+Please note that you need to have Visual Studio and at least .NET 4.1 installed on your machine to contribute
 
 ```
 git clone https://github.com/exxmen/sharepointdirect.git

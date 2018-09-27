@@ -8,6 +8,7 @@ using Microsoft.SharePoint.Client;
 using System.IO;
 using System.Reflection;
 using System.Diagnostics;
+using System.Data;
 
 namespace SpOnlineDirectConsole
 {
@@ -35,6 +36,28 @@ namespace SpOnlineDirectConsole
 
                     switch (method)
                     {
+                        case "getitems":
+                            int rows = 1;
+                            if (!Int32.TryParse(args[3], out rows))
+                            {
+                                Console.Write("Please enter a valid number and try again!");
+                                break;
+                            }
+                            else
+                            {
+                                if (rows > 5000)
+                                {
+                                    Console.Write("The number of rows you are requesting is greater than the view permist. Please enter a number lower than 5000 and try again!");
+                                    break;
+                                }
+                            }
+                            var fieldsToExport = new List<string>();
+                            for (int i = 4; i < args.Length; i++)
+                            {
+                                fieldsToExport.Add(args[i]);
+                            }
+                            GetItems(args[1], args[2], rows, fieldsToExport);
+                            break;
                         case "getnumberofitems":
                             GetNumberOfItems(args[1], args[2]);
                             break;
@@ -109,18 +132,21 @@ namespace SpOnlineDirectConsole
                             Console.WriteLine("Example: SharePointDirect DeleteItemById <URL> <Listname> <ID>");
                             Console.WriteLine(" ");
                             Console.WriteLine("use \"UploadFileWithMeta\" to upload a file and include metadata. ");
-                            Console.WriteLine("Example: SharePointDirect UploadFileWithMeta <URL> <Listname> <Filepath> <Property1> <Property2> <...>");
+                            Console.WriteLine("Example: SharePointDirect UploadFileWithMeta <URL> <Listname> <Filepath> <Property1> <Property...> ");
                             Console.WriteLine(" ");
                             Console.WriteLine("use \"UploadFileNoMeta\" to upload a file with no defined metadata. ");
                             Console.WriteLine("Example: SharePointDirect UploadFileNoMeta <URL> <Listname> <Filepath>");
                             Console.WriteLine(" ");
                             Console.WriteLine("use \"GetOneItem\" to get an item from the list based on the title. ");
-                            Console.WriteLine("Example: SharePointDirect GetOneItem <URL> <Listname> <Field1> <Value1> <...>");
+                            Console.WriteLine("Example: SharePointDirect GetOneItem <URL> <Listname> <Field1> <Value1> <Value...>");
                             Console.WriteLine(" ");
                             Console.WriteLine("use \"GetOldestItem\" to get the oldest item from the list based on the title. ");
                             Console.WriteLine("Example: SharePointDirect GetOldestItem <URL> <Listname>");
                             Console.WriteLine(" ");
-                            Console.WriteLine("More information on this link: https://github.com/exxmen/sharepointdirect/blob/master/README.md");
+                            Console.WriteLine("use \"GetItems\" to get the x number of items from the list based and columns provided. ");
+                            Console.WriteLine("Example: SharePointDirect GetOldestItem <URL> <Listname> <Number of rows> <Column1> <Column...>");
+                            Console.WriteLine(" ");
+                            Console.WriteLine("You can find more information about SharePointDirect on this link: https://github.com/exxmen/sharepointdirect/blob/master/README.md");
                             Console.WriteLine(" ");
                             Console.WriteLine("Press any key to exit. ");
                             Console.ReadKey();
@@ -535,6 +561,74 @@ namespace SpOnlineDirectConsole
             catch (Exception e)
             {
                 using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetOldestItem.txt"))
+                {
+                    sw.WriteLine("Error: " + e.Message);
+                }
+            }
+        }
+
+        /// <summary>
+        /// gets the x number of items from provided list
+        /// </summary>
+        /// <param name="URL"></param>
+        /// <param name="ListName"></param>
+        /// <param name="numRows"></param>
+        /// <param name="FieldsToExport"></param>
+        public static void GetItems(string URL, string ListName, int numRows, List<string> FieldsToExport)
+        {
+            System.IO.File.Delete("C:\\Apps\\GetItems.csv");
+            System.IO.File.Delete("C:\\Apps\\GetItems.txt");
+
+            int itemId;
+            //DataTable itemsTable = new DataTable("tableToReturn");
+            //DataRow dr;
+            try
+            {
+                AuthenticationManager authManager = new AuthenticationManager();
+
+                CamlQuery query = new CamlQuery();
+                var viewXML = "<View><Query><OrderBy><FieldRef Name='Created' Ascending='TRUE'/></OrderBy></Query><RowLimit>" + numRows + "</RowLimit></View>";
+                query.ViewXml = viewXML;
+                var context = authManager.GetWebLoginClientContext(URL);
+                Web web = context.Web;
+                List list = web.Lists.GetByTitle(ListName);
+                ListItemCollection listItems = list.GetItems(query);
+                context.Load(listItems);
+                context.ExecuteQuery();
+
+                itemId = listItems[0].Id;
+
+                ListItem item = list.GetItemById(itemId);
+                context.Load(item);
+                context.ExecuteQuery();
+
+                //itemsTable.Clear();
+
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetItems.csv"))
+                {
+                    foreach (string field in FieldsToExport)
+                    {
+                        //itemsTable.Columns.Add(field);
+
+                        sw.Write(field + ",");
+                    }
+
+                    sw.Write(Environment.NewLine);
+
+                    foreach (ListItem listItem in listItems)
+                    {
+                        //dr = itemsTable.NewRow();
+                        foreach (string f in FieldsToExport)
+                        {
+                            sw.Write(listItem.FieldValues[f] + ",");
+                        }
+                        sw.Write(Environment.NewLine);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                using (StreamWriter sw = System.IO.File.CreateText("C:\\Apps\\GetItems.txt"))
                 {
                     sw.WriteLine("Error: " + e.Message);
                 }
